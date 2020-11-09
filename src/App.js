@@ -26,12 +26,12 @@ function App() {
       case "mousedown":
         setMouseDown(true)
         setLocations([...locations, newLocation])
-        setUndoables([newLocation])
+        setUndoables([...undoables, [newLocation]])
         break;
       case "mousemove":
         if (mouseDown) {
           setLocations([...locations, newLocation])
-          setUndoables([...undoables, newLocation])
+          setUndoables([...undoables.slice(0, -1), undoables[undoables.length - 1].concat([newLocation])])
         }
         break;
       case "mouseup":
@@ -49,7 +49,8 @@ function App() {
   }
 
   function handleUndo() {
-    setLocations(locations.filter(el => !undoables.includes(el)))
+    setLocations(locations.filter(el => !undoables[undoables.length - 1].includes(el)))
+    setUndoables(undoables.slice(0, -1))
   }
 
   return (
