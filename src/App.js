@@ -5,6 +5,7 @@ const HOOK_SVG = 'm129.03125 63.3125c0-34.914062-28.941406-63.3125-64.519531-63.
 const HOOK_PATH = new Path2D(HOOK_SVG)
 const SCALE = 0.3
 const OFFSET = 80
+
 function draw(ctx, location) {
   ctx.fillStyle = 'deepskyblue'
   ctx.shadowColor = 'dodgerblue'
