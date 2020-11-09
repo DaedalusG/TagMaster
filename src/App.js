@@ -19,6 +19,7 @@ function draw(ctx, location) {
 
 function App() {
   const [locations, setLocations] = React.useState([])
+  const [mouseDown, setMouseDown] = React.useState(false)
   const canvasRef = React.useRef(null)
 
   React.useEffect(() => {
@@ -30,7 +31,26 @@ function App() {
 
   function handleCanvasClick(e) {
     const newLocation = { x: e.clientX, y: e.clientY }
-    setLocations([...locations, newLocation])
+    switch (e.type) {
+      case "mousedown":
+        setMouseDown(true)
+        setLocations([...locations, newLocation])
+        break;
+      case "mousemove":
+        if (mouseDown) {
+          setLocations([...locations, newLocation])
+        }
+        break;
+      case "mouseup":
+        setMouseDown(false)
+        break;
+      case "mouseout":
+        setMouseDown(false)
+        break;
+      default:
+        break;
+    }
+
   }
 
   function handleClear() {
@@ -49,7 +69,10 @@ function App() {
         ref={canvasRef}
         width={window.innerWidth}
         height={window.innerHeight}
-        onClick={handleCanvasClick}
+        onMouseDown={handleCanvasClick}
+        onMouseMove={handleCanvasClick}
+        onMouseOut={handleCanvasClick}
+        onMouseUp={handleCanvasClick}
       />
     </>
   )
