@@ -2,9 +2,10 @@ import './styles/App.css';
 import React from 'react'
 import Controls from './Controls'
 
-function draw(ctx, location, { color, height, width }) {
+function draw(ctx, { x, y, stroke }) {
+  const { color, height, width } = stroke
   ctx.fillStyle = color
-  ctx.fillRect(location.x - 4, location.y - 28, height, width)
+  ctx.fillRect(x - 4, y - 28, height, width)
 }
 
 function App() {
@@ -18,11 +19,11 @@ function App() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    locations.forEach(location => draw(ctx, location, brush))
+    locations.forEach(location => draw(ctx, location))
   })
 
   function handleCanvasClick(e) {
-    const newLocation = { x: e.clientX, y: e.clientY }
+    const newLocation = { x: e.clientX, y: e.clientY, stroke: brush }
     switch (e.type) {
       case "mousedown":
         setMouseDown(true)
