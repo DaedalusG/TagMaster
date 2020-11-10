@@ -1,15 +1,15 @@
 import './App.css';
 import React from 'react'
 
-function draw(ctx, location, color) {
+function draw(ctx, location, { color, height, width }) {
   ctx.fillStyle = color
-  ctx.fillRect(location.x, location.y, 10, 10)
+  ctx.fillRect(location.x - 4, location.y - 28, height, width)
 }
 
 function App() {
   const [locations, setLocations] = React.useState([])
   const [undoables, setUndoables] = React.useState([])
-  const [color, setColor] = React.useState('black')
+  const [brush, setBrush] = React.useState({ color: 'black', height: 10, width: 10 })
   const [mouseDown, setMouseDown] = React.useState(false)
   const canvasRef = React.useRef(null)
 
@@ -17,7 +17,7 @@ function App() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    locations.forEach(location => draw(ctx, location, color))
+    locations.forEach(location => draw(ctx, location, brush))
   })
 
   function handleCanvasClick(e) {
@@ -63,7 +63,6 @@ function App() {
         height={window.innerHeight}
         onMouseDown={handleCanvasClick}
         onMouseMove={handleCanvasClick}
-        onMouseOut={handleCanvasClick}
         onMouseUp={handleCanvasClick}
       />
     </>
