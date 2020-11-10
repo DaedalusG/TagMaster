@@ -2,8 +2,8 @@ import './styles/App.css';
 import React from 'react'
 import Controls from './Controls'
 
-function draw(ctx, { x, y, stroke }) {
-  const { color, height, width } = stroke
+function draw(ctx, { x, y, brush }) {
+  const { color, height, width } = brush
   ctx.fillStyle = color
   ctx.fillRect(x - 4, y - 28, height, width)
 }
@@ -19,21 +19,21 @@ function App() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    locations.forEach(location => draw(ctx, location))
+    locations.forEach(stroke => draw(ctx, stroke))
   })
 
   function handleCanvasClick(e) {
-    const newLocation = { x: e.clientX, y: e.clientY, stroke: brush }
+    const newStroke = { x: e.clientX, y: e.clientY, brush: brush }
     switch (e.type) {
       case "mousedown":
         setMouseDown(true)
-        setLocations([...locations, newLocation])
-        setUndoables([...undoables, [newLocation]])
+        setLocations([...locations, newStroke])
+        setUndoables([...undoables, [newStroke]])
         break;
       case "mousemove":
         if (mouseDown) {
-          setLocations([...locations, newLocation])
-          setUndoables([...undoables.slice(0, -1), undoables[undoables.length - 1].concat([newLocation])])
+          setLocations([...locations, newStroke])
+          setUndoables([...undoables.slice(0, -1), undoables[undoables.length - 1].concat([newStroke])])
         }
         break;
       case "mouseup":
