@@ -17,7 +17,7 @@ const Controls = (props) => {
                 <button onClick={handleUndo}>Undo</button>
                 <input
                     type="color"
-                    value={brush}
+                    value={brush['color']}
                     onChange={selectColor}
                 />
             </div>
