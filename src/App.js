@@ -9,7 +9,7 @@ function draw(ctx, location, { color, height, width }) {
 function App() {
   const [locations, setLocations] = React.useState([])
   const [undoables, setUndoables] = React.useState([])
-  const [brush, setBrush] = React.useState({ color: 'black', height: 10, width: 10 })
+  const [brush, setBrush] = React.useState({ color: 'white', height: 10, width: 10 })
   const [mouseDown, setMouseDown] = React.useState(false)
   const canvasRef = React.useRef(null)
 
