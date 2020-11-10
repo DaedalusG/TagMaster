@@ -1,5 +1,6 @@
-import './App.css';
+import './styles/App.css';
 import React from 'react'
+import Controls from './Controls'
 
 function draw(ctx, location, { color, height, width }) {
   ctx.fillStyle = color
@@ -9,7 +10,7 @@ function draw(ctx, location, { color, height, width }) {
 function App() {
   const [locations, setLocations] = React.useState([])
   const [undoables, setUndoables] = React.useState([])
-  const [brush, setBrush] = React.useState({ color: 'white', height: 10, width: 10 })
+  const [brush, setBrush] = React.useState({ color: "#FFFFFF", height: 10, width: 10 })
   const [mouseDown, setMouseDown] = React.useState(false)
   const canvasRef = React.useRef(null)
 
@@ -55,8 +56,12 @@ function App() {
 
   return (
     <>
-      <button onClick={handleClear}>Clear</button>
-      <button onClick={handleUndo}>Undo</button>
+      <Controls
+        handleClear={handleClear}
+        handleUndo={handleUndo}
+        brush={brush}
+        setBrush={setBrush}
+      />
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
