@@ -1,5 +1,6 @@
-import './App.css';
+import './styles/App.css';
 import React from 'react'
+import Controls from './Controls'
 
 function draw(ctx, location, { color, height, width }) {
   ctx.fillStyle = color
@@ -57,6 +58,7 @@ function App() {
     <>
       <button onClick={handleClear}>Clear</button>
       <button onClick={handleUndo}>Undo</button>
+      <Controls />
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
