@@ -59,6 +59,8 @@ function App() {
       <Controls
         handleClear={handleClear}
         handleUndo={handleUndo}
+        brush={brush}
+        setBrush={setBrush}
       />
       <canvas
         ref={canvasRef}
