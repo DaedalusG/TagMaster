@@ -2,13 +2,14 @@ import './styles/App.css';
 import React from 'react'
 import Controls from './Controls'
 
-function draw(ctx, location, { color, height, width }) {
+function draw(ctx, { x, y, brush }) {
+  const { color, height, width } = brush
   ctx.fillStyle = color
-  ctx.fillRect(location.x - 4, location.y - 28, height, width)
+  ctx.fillRect(x - 4, y - 28, height, width)
 }
 
 function App() {
-  const [locations, setLocations] = React.useState([])
+  const [strokes, setStrokes] = React.useState([])
   const [undoables, setUndoables] = React.useState([])
   const [brush, setBrush] = React.useState({ color: "#FFFFFF", height: 10, width: 10 })
   const [mouseDown, setMouseDown] = React.useState(false)
@@ -18,21 +19,21 @@ function App() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    locations.forEach(location => draw(ctx, location, brush))
+    strokes.forEach(stroke => draw(ctx, stroke))
   })
 
   function handleCanvasClick(e) {
-    const newLocation = { x: e.clientX, y: e.clientY }
+    const newStroke = { x: e.clientX, y: e.clientY, brush: brush }
     switch (e.type) {
       case "mousedown":
         setMouseDown(true)
-        setLocations([...locations, newLocation])
-        setUndoables([...undoables, [newLocation]])
+        setStrokes([...strokes, newStroke])
+        setUndoables([...undoables, [newStroke]])
         break;
       case "mousemove":
         if (mouseDown) {
-          setLocations([...locations, newLocation])
-          setUndoables([...undoables.slice(0, -1), undoables[undoables.length - 1].concat([newLocation])])
+          setStrokes([...strokes, newStroke])
+          setUndoables([...undoables.slice(0, -1), undoables[undoables.length - 1].concat([newStroke])])
         }
         break;
       case "mouseup":
@@ -46,11 +47,11 @@ function App() {
 
   function handleClear() {
     setUndoables([])
-    setLocations([])
+    setStrokes([])
   }
 
   function handleUndo() {
-    setLocations(locations.filter(el => !undoables[undoables.length - 1].includes(el)))
+    setStrokes(strokes.filter(el => !undoables[undoables.length - 1].includes(el)))
     setUndoables(undoables.slice(0, -1))
   }
 
