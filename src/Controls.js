@@ -6,7 +6,11 @@ const Controls = (props) => {
     const { handleClear, handleUndo, brush, setBrush } = props
 
     const selectColor = (e) => {
-        setBrush({ color: e.target.value, height: brush['height'], width: brush['width'] })
+        setBrush({
+            color: e.target.value,
+            height: brush['height'],
+            width: brush['width']
+        })
     }
 
     return ReactDom.createPortal(

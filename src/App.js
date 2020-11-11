@@ -5,7 +5,13 @@ import Controls from './Controls'
 function draw(ctx, { x, y, brush }) {
   const { color, height, width } = brush
   ctx.fillStyle = color
-  ctx.fillRect(x - 4, y - 28, height, width)
+  ctx.fillRect(x, y, height, width)
+  // ctx.strokeRect(x, y, height, width)
+  // ctx.strokeStyle = color;
+  // ctx.lineWidth = 25;
+  // ctx.lineCap = "round";
+  // ctx.lineJoin = "round";
+  // ctx.stroke();
 }
 
 function App() {
